@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 
-<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="700.0" style="-fx-background-color: linear-gradient(to bottom right, #872f3f, #FFCAC8);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <children>
         <Canvas fx:id="TheCanvas" height="400.0" layoutX="60.0" layoutY="20.0" width="640.0" />
         <Canvas fx:id="canvasGo" height="400.0" layoutX="60.0" layoutY="20.0" onMouseDragged="#onMouseDraggedListener" onMouseExited="#onMouseExitedListener" onMousePressed="#onMousePressedListener" onMouseReleased="#onMouseReleaseListener" width="640.0" />
@@ -76,8 +76,8 @@
       </VBox>
       <Pane fx:id="titlePane" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="20.0" prefWidth="700.0">
          <children>
-            <FontAwesomeIconView glyphName="CLOSE" layoutX="677.0" layoutY="17.0" onMouseClicked="#close" size="23" />
-            <FontAwesomeIconView glyphName="MINUS" layoutX="650.0" layoutY="20.0" onMouseClicked="#minimize" size="24" />
+            <FontAwesomeIconView glyphName="CLOSE" layoutX="677.0" layoutY="18.0" onMouseClicked="#close" size="23" />
+            <FontAwesomeIconView glyphName="MINUS" layoutX="650.0" layoutY="21.0" onMouseClicked="#minimize" size="24" />
          </children>
       </Pane>
           <Slider fx:id="sizeSlider" layoutX="115.0" layoutY="429.0" prefHeight="14.0" prefWidth="200.0" />
@@ -86,13 +86,13 @@
                   <Color red="0.0" green="0.0" blue="0.0" />
               </value>
           </ColorPicker>
-          <RadioButton fx:id="strokeRB" layoutX="2.0" layoutY="358.0" mnemonicParsing="false" selected="true" text="Stroke">
+          <RadioButton fx:id="strokeRB" layoutX="2.0" layoutY="358.0" mnemonicParsing="false" selected="true" text="Stroke" textFill="#f2f2f2">
          <toggleGroup>
                   <ToggleGroup fx:id="shapes" />
          </toggleGroup>
           </RadioButton>
-          <RadioButton fx:id="fillRB" layoutX="3.0" layoutY="331.0" mnemonicParsing="false" text="Fill" toggleGroup="$shapes" />
-      <Label fx:id="sizeLabel" layoutX="86.0" layoutY="427.0" prefHeight="18.0" prefWidth="18.0" />
-      <Label fx:id="sizeLabel1" layoutX="100.0" layoutY="427.0" prefHeight="18.0" prefWidth="18.0" text="px" />
+          <RadioButton fx:id="fillRB" layoutX="3.0" layoutY="331.0" mnemonicParsing="false" text="Fill" textFill="#f2f2f2" toggleGroup="$shapes" />
+      <Label fx:id="sizeLabel" layoutX="86.0" layoutY="427.0" prefHeight="18.0" prefWidth="18.0" textFill="#efebeb" />
+      <Label fx:id="sizeLabel1" layoutX="100.0" layoutY="427.0" prefHeight="18.0" prefWidth="18.0" text="px" textFill="#efebeb" />
     </children>
 </AnchorPane>

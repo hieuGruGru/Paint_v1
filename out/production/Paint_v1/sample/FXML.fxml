@@ -80,7 +80,7 @@
             <FontAwesomeIconView glyphName="MINUS" layoutX="650.0" layoutY="20.0" onMouseClicked="#minimize" size="24" />
          </children>
       </Pane>
-          <Slider fx:id="sizeSlider" layoutX="117.0" layoutY="429.0" prefHeight="14.0" prefWidth="200.0" />
+          <Slider fx:id="sizeSlider" layoutX="115.0" layoutY="429.0" prefHeight="14.0" prefWidth="200.0" />
           <ColorPicker fx:id="colorPick" layoutX="3.0" layoutY="422.0" prefHeight="25.0" prefWidth="78.0">
               <value>
                   <Color red="0.0" green="0.0" blue="0.0" />
@@ -93,6 +93,6 @@
           </RadioButton>
           <RadioButton fx:id="fillRB" layoutX="3.0" layoutY="331.0" mnemonicParsing="false" text="Fill" toggleGroup="$shapes" />
       <Label fx:id="sizeLabel" layoutX="86.0" layoutY="427.0" prefHeight="18.0" prefWidth="18.0" />
-      <Label fx:id="sizeLabel1" layoutX="102.0" layoutY="427.0" prefHeight="18.0" prefWidth="18.0" text="px" />
+      <Label fx:id="sizeLabel1" layoutX="100.0" layoutY="427.0" prefHeight="18.0" prefWidth="18.0" text="px" />
     </children>
 </AnchorPane>
