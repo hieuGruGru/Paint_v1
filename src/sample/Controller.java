@@ -2,15 +2,16 @@ package sample;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -28,6 +29,9 @@ public class Controller implements Initializable {
     private Canvas TheCanvas, canvasGo;
     @FXML
     private Slider sizeSlider;
+    @FXML
+    private Label sizeLabel;
+
 
     private GraphicsContext gcB, gcF;
     private boolean drawLine = false, drawOval = false, drawRectangle = false, freeDesign = true, freeErase = false;
@@ -65,21 +69,24 @@ public class Controller implements Initializable {
         gcF = canvasGo.getGraphicsContext2D();
         sizeSlider.setMin(1);
         sizeSlider.setMax(50);
+        sizeLabel.textProperty().bind(Bindings.format(
+                "%.0f", sizeSlider.valueProperty()));
+        DoubleProperty value = sizeSlider.valueProperty();
 
     }
 
     @FXML
-    private void onMousePressedListener(MouseEvent e){
-        this.startX = e.getX();
-        this.startY = e.getY();
-        this.oldX = e.getX();
-        this.oldY = e.getY();
+    private void onMousePressedListener(MouseEvent event) {
+        this.startX = event.getX();
+        this.startY = event.getY();
+        this.oldX = event.getX();
+        this.oldY = event.getY();
     }
 
     @FXML
-    private void onMouseDraggedListener(MouseEvent e){
-        this.lastX = e.getX();
-        this.lastY = e.getY();
+    private void onMouseDraggedListener(MouseEvent event) {
+        this.lastX = event.getX();
+        this.lastY = event.getY();
 
         if(drawRectangle)
             drawRectEffect();
@@ -94,7 +101,7 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void onMouseReleaseListener(MouseEvent e){
+    private void onMouseReleaseListener(MouseEvent event) {
         if(drawRectangle)
             drawRect();
         if(drawOval)
@@ -104,50 +111,44 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void onMouseExitedListener(MouseEvent event)
-    {
-        System.out.println("No puedes dibujar fuera del canvas");
+    private void onMouseExitedListener(MouseEvent event) {
     }
 
-    private void drawOval()
-    {
+    private void drawOval() {
         double dx = lastX - startX;
         double dy = lastY - startY;
         gcB.setLineWidth(sizeSlider.getValue());
 
-        if(fillRB.isSelected()){
+        if(fillRB.isSelected()) {
             gcB.setFill(colorPick.getValue());
             gcB.fillOval(startX, startY, dx, dy);
-        }else{
+        } else {
             gcB.setStroke(colorPick.getValue());
             gcB.strokeOval(startX, startY, dx, dy);
         }
     }
 
-    private void drawRect()
-    {
+    private void drawRect() {
         double dx = lastX - startX;
         double dy = lastY - startY;
         gcB.setLineWidth(sizeSlider.getValue());
 
-        if(fillRB.isSelected()){
+        if(fillRB.isSelected()) {
             gcB.setFill(colorPick.getValue());
             gcB.fillRect(startX, startY, dx, dy);
-        }else{
+        } else {
             gcB.setStroke(colorPick.getValue());
             gcB.strokeRect(startX, startY, dx, dy);
         }
     }
 
-    private void drawLine()
-    {
+    private void drawLine() {
         gcB.setLineWidth(sizeSlider.getValue());
         gcB.setStroke(colorPick.getValue());
         gcB.strokeLine(startX, startY, lastX, lastY);
     }
 
-    private void freeDrawing()
-    {
+    private void freeDrawing() {
         gcB.setLineWidth(sizeSlider.getValue());
         gcB.setStroke(colorPick.getValue());
         gcB.strokeLine(oldX, oldY, lastX, lastY);
@@ -155,8 +156,7 @@ public class Controller implements Initializable {
         oldY = lastY;
     }
 
-    private void freeErase()
-    {
+    private void freeErase() {
         gcB.setLineWidth(sizeSlider.getValue());
         gcB.setStroke(Color.WHITE);
         gcB.strokeLine(oldX, oldY, lastX, lastY);
@@ -164,61 +164,53 @@ public class Controller implements Initializable {
         oldY = lastY;
     }
 
-    private void drawOvalEffect()
-    {
+    private void drawOvalEffect() {
         double dx = lastX - startX;
         double dy = lastY - startY;
         gcF.setLineWidth(sizeSlider.getValue());
 
-        if(fillRB.isSelected()){
+        if(fillRB.isSelected()) {
             gcF.clearRect(0, 0, canvasGo.getWidth(), canvasGo.getHeight());
             gcF.setFill(colorPick.getValue());
             gcF.fillOval(startX, startY, dx, dy);
-        }else{
+        } else {
             gcF.clearRect(0, 0, canvasGo.getWidth(), canvasGo.getHeight());
             gcF.setStroke(colorPick.getValue());
             gcF.strokeOval(startX, startY, dx, dy);
         }
     }
 
-    private void drawRectEffect()
-    {
+    private void drawRectEffect() {
         double dx = lastX - startX;
         double dy = lastY - startY;
         gcF.setLineWidth(sizeSlider.getValue());
 
-        if(fillRB.isSelected()){
+        if(fillRB.isSelected()) {
             gcF.clearRect(0, 0, canvasGo.getWidth(), canvasGo.getHeight());
             gcF.setFill(colorPick.getValue());
             gcF.fillRect(startX, startY, dx, dy);
-        }else{
+        } else {
             gcF.clearRect(0, 0, canvasGo.getWidth(), canvasGo.getHeight());
             gcF.setStroke(colorPick.getValue());
             gcF.strokeRect(startX, startY, dx, dy );
         }
     }
 
-    private void drawLineEffect()
-    {
+    private void drawLineEffect() {
         gcF.setLineWidth(sizeSlider.getValue());
         gcF.setStroke(colorPick.getValue());
         gcF.clearRect(0, 0, canvasGo.getWidth() , canvasGo.getHeight());
         gcF.strokeLine(startX, startY, lastX, lastY);
     }
-    ///////////////////////////////////////////////////////////////////////
 
     @FXML
-    private void clearCanvas(ActionEvent e)
-    {
+    private void clearCanvas(ActionEvent event) {
         gcB.clearRect(0, 0, TheCanvas.getWidth(), TheCanvas.getHeight());
         gcF.clearRect(0, 0, TheCanvas.getWidth(), TheCanvas.getHeight());
     }
 
-
-    //>>>>>>>>>>>>>>>>>>>>>Buttons control<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     @FXML
-    private void setOvalAsCurrentShape(ActionEvent e)
-    {
+    private void setOvalAsCurrentShape(ActionEvent event) {
         drawLine = false;
         drawOval = true;
         drawRectangle = false;
@@ -227,8 +219,7 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void setLineAsCurrentShape(ActionEvent e)
-    {
+    private void setLineAsCurrentShape(ActionEvent event) {
         drawLine = true;
         drawOval = false;
         drawRectangle = false;
@@ -236,8 +227,7 @@ public class Controller implements Initializable {
         freeErase = false;
     }
     @FXML
-    private void setRectangleAsCurrentShape(ActionEvent e)
-    {
+    private void setRectangleAsCurrentShape(ActionEvent event) {
         drawLine = false;
         drawOval = false;
         freeDesign = false;
@@ -246,8 +236,7 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void setFreeErase(ActionEvent e)
-    {
+    private void setFreeErase(ActionEvent event) {
         drawLine = false;
         drawOval = false;
         drawRectangle = false;
@@ -256,12 +245,18 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void setFreeDesign(ActionEvent e)
-    {
+    private void setFreeDesign(ActionEvent event) {
         drawLine = false;
         drawOval = false;
         drawRectangle = false;
         freeDesign = true;
         freeErase = false;
     }
+
+    @FXML
+    private void slideLineWidth(ActionEvent event) {
+        sizeLabel.textProperty().bind(Bindings.format(
+                "%.0f", sizeSlider.valueProperty()));
+    }
+
 }
